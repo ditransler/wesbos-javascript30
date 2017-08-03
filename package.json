@@ -1,0 +1,17 @@
+{
+  "name": "wesbos-javascript30",
+  "version": "0.0.1",
+  "description": "Edu project for JavaScript30 course by Wes Bos",
+  "private": true,
+  "scripts": {
+    "lint:eslint": "./node_modules/.bin/eslint ./**/*",
+    "precommit": "npm run lint:eslint"
+  },
+  "author": "Dmitriy Beglov",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "~4.3.0",
+    "eslint-plugin-html": "~3.1.1",
+    "husky": "~0.14.3"
+  }
+}
