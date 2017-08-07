@@ -107,7 +107,15 @@
         keys.addEventListener('transitionend', removeTransition);
 
         window.addEventListener('keydown', function onKeyDownPlaySound(evt) {
-            playSound(evt.keyCode || evt.which);
+            const evtKeyCode = evt.keyCode || evt.which;
+
+            if (evtKeyCode === 32) {
+                if (document.activeElement.classList.contains('.key')) {
+                    return playSound(document.activeElement.dataset.key);
+                }
+            }
+
+            playSound(evtKeyCode);
         });
     </script>
 </body>
