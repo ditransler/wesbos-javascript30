@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS + CSS Clock</title>
+
+    <style>
+        html {
+            background: #018ded url("http://unsplash.it/1500/1000?image=881&blur=50") no-repeat;
+            background-size: cover;
+            font-family: Helvetica Neue, Helvetica, sans-serif;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        body {
+            align-items: center;
+            display: flex;
+            flex: 1;
+            font-size: 2rem;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .clock {
+            border: 20px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1),
+                        inset 0 0 0 3px #efefef,
+                        inset 0 0 10px black,
+                        0 0 10px rgba(0, 0, 0, 0.2);
+            height: 30rem;
+            margin: 50px auto;
+            padding: 2rem;
+            position: relative;
+            width: 30rem;
+        }
+
+        .clock__face {
+            height: 100%;
+            position: relative;
+            transform: translateY(-3px); /* account for the height of the clock hands */
+            width: 100%;
+        }
+
+        .clock__face::after {
+            background-color: #fff;
+            border-radius: 50%;
+            content: "";
+            height: 30px;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+        }
+
+        .clock__hand {
+            background-color: #000;
+            height: 0;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform-origin: 50% 100%;
+            width: 0;
+        }
+
+        .clock__hand--transition {
+            transition: transform 0.5s cubic-bezier(0.1, 2.7, 0.58, 1);
+        }
+
+        .clock__hand--hour {
+            margin: -100px -6px 0;
+            padding: 100px 6px 0;
+        }
+
+        .clock__hand--minute {
+            margin: -130px -4px 0;
+            padding: 130px 4px 0;
+        }
+
+        .clock__hand--second {
+            margin: -150px -2px 0;
+            padding: 150px 2px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="clock__face">
+            <div class="clock__hand clock__hand--hour"></div>
+            <div class="clock__hand clock__hand--minute"></div>
+            <div class="clock__hand clock__hand--second"></div>
+        </div>
+    </div>
+
+    <script>
+        const clockHands = document.querySelector('.clock__hand');
+        const secondsHand = document.querySelector('.clock__hand--second');
+        const minutesHand = document.querySelector('.clock__hand--minute');
+        const hoursHand = document.querySelector('.clock__hand--hour');
+
+        function setDate() {
+            const now = new Date();
+            const transitionClass = 'clock__hand--transition';
+
+            clockHands.classList.add(transitionClass);
+
+            const seconds = now.getSeconds();
+            const secondsDegrees = ((seconds / 60) * 360);
+
+            const minutes = now.getMinutes();
+            const minutesDegrees = ((minutes / 60) * 360);
+
+            const hours = now.getHours();
+            const hoursDegrees = ((hours / 12) * 360);
+
+            if (secondsDegrees === 0) {
+                secondsHand.classList.remove(transitionClass);
+            }
+
+            if (minutesDegrees === 0) {
+                minutesHand.classList.remove(transitionClass);
+            }
+
+            if (hoursDegrees === 0) {
+                hoursHand.classList.remove(transitionClass);
+            }
+
+            secondsHand.style.transform = `rotate(${secondsDegrees}deg)`;
+            minutesHand.style.transform = `rotate(${minutesDegrees}deg)`;
+            hoursHand.style.transform = `rotate(${hoursDegrees}deg)`;
+
+            setTimeout(setDate, 1000);
+        }
+
+        setDate();
+
+    </script>
+</body>
+</html>
