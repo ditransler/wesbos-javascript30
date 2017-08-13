@@ -88,17 +88,32 @@
 <body>
     <div class="clock">
         <div class="clock__face">
-            <div class="clock__hand clock__hand--hour"></div>
-            <div class="clock__hand clock__hand--minute"></div>
-            <div class="clock__hand clock__hand--second"></div>
+            <div class="clock__hand clock__hand--hour" data-degrees="0"></div>
+            <div class="clock__hand clock__hand--minute" data-degrees="0"></div>
+            <div class="clock__hand clock__hand--second" data-degrees="0"></div>
         </div>
     </div>
 
     <script>
+        const clock = document.querySelector('.clock');
         const clockHands = document.querySelectorAll('.clock__hand');
         const secondsHand = document.querySelector('.clock__hand--second');
         const minutesHand = document.querySelector('.clock__hand--minute');
         const hoursHand = document.querySelector('.clock__hand--hour');
+
+        clock.addEventListener('transitionend', function (evt) {
+            if (evt.propertyName !== 'transform') {
+                return;
+            }
+
+            if (!(+evt.target.dataset.degrees === 360)) {
+                return;
+            }
+
+            evt.target.classList.remove('clock__hand--transition');
+            evt.target.dataset.degrees = 0;
+            evt.target.style.transform = `rotate(${evt.target.dataset.degrees}deg)`;
+        });
 
         function setDate() {
             const now = new Date();
@@ -111,29 +126,29 @@
             });
 
             const seconds = now.getSeconds();
-            const secondsDegrees = seconds * 6;
+            secondsHand.dataset.degrees = seconds * 6;
 
             const minutes = now.getMinutes();
-            const minutesDegrees = minutes * 6;
+            minutesHand.dataset.degrees = minutes * 6;
 
             const hours = now.getHours();
-            const hoursDegrees = hours * 15;
+            hoursHand.dataset.degrees = hours * 15;
 
-            if (secondsDegrees === 0) {
-                secondsHand.classList.remove(transitionClass);
+            if (seconds === 0) {
+                secondsHand.dataset.degrees = 360;
             }
 
-            if (minutesDegrees === 0) {
-                minutesHand.classList.remove(transitionClass);
+            if (minutes === 0) {
+                minutesHand.dataset.degrees = 360;
             }
 
-            if (hoursDegrees === 0) {
-                hoursHand.classList.remove(transitionClass);
+            if (hours === 0) {
+                hoursHand.dataset.degrees = 360;
             }
 
-            secondsHand.style.transform = `rotate(${secondsDegrees}deg)`;
-            minutesHand.style.transform = `rotate(${minutesDegrees}deg)`;
-            hoursHand.style.transform = `rotate(${hoursDegrees}deg)`;
+            secondsHand.style.transform = `rotate(${secondsHand.dataset.degrees}deg)`;
+            minutesHand.style.transform = `rotate(${minutesHand.dataset.degrees}deg)`;
+            hoursHand.style.transform = `rotate(${hoursHand.dataset.degrees}deg)`;
 
             setTimeout(setDate, 1000);
         }
