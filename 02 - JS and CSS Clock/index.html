@@ -95,7 +95,7 @@
     </div>
 
     <script>
-        const clockHands = document.querySelector('.clock__hand');
+        const clockHands = document.querySelectorAll('.clock__hand');
         const secondsHand = document.querySelector('.clock__hand--second');
         const minutesHand = document.querySelector('.clock__hand--minute');
         const hoursHand = document.querySelector('.clock__hand--hour');
@@ -104,16 +104,20 @@
             const now = new Date();
             const transitionClass = 'clock__hand--transition';
 
-            clockHands.classList.add(transitionClass);
+            clockHands.forEach((item) => {
+                if (!item.classList.contains(transitionClass)) {
+                    item.classList.add(transitionClass);
+                }
+            });
 
             const seconds = now.getSeconds();
-            const secondsDegrees = ((seconds / 60) * 360);
+            const secondsDegrees = seconds * 6;
 
             const minutes = now.getMinutes();
-            const minutesDegrees = ((minutes / 60) * 360);
+            const minutesDegrees = minutes * 6;
 
             const hours = now.getHours();
-            const hoursDegrees = ((hours / 12) * 360);
+            const hoursDegrees = hours * 15;
 
             if (secondsDegrees === 0) {
                 secondsHand.classList.remove(transitionClass);
