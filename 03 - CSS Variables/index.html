@@ -27,6 +27,16 @@
             margin-bottom: 50px;
         }
 
+        .hl {
+            color: var(--base);
+        }
+
+        img {
+            background-color: var(--base);
+            filter: blur(var(--blur));
+            padding: var(--spacing);
+        }
+
         input {
             vertical-align: middle;
             width: 100px;
@@ -51,6 +61,43 @@
 
 
 <script>
+    const controls = document.querySelector('.controls');
+    const inputs = controls.querySelectorAll('input');
+
+    // A cross-browser desktop-and-mobile way
+    // to consitently respond to range/slider interactions
+    // Credits to Andrew Willems (https://stackoverflow.com/a/37623959)
+    function onRangeChange(rangeInputElem, listener) {
+
+        let inputEvtHasNeverFired = true;
+
+        let rangeValue = { current: null, mostRecent: null };
+
+        rangeInputElem.addEventListener('input', function(evt) {
+            inputEvtHasNeverFired = false;
+
+            rangeValue.current = evt.target.value;
+
+            if (rangeValue.current !== rangeValue.mostRecent) {
+                listener(evt);
+            }
+
+            rangeValue.mostRecent = rangeValue.current;
+        });
+
+        rangeInputElem.addEventListener('change', function(evt) {
+            if (inputEvtHasNeverFired) {
+                listener(evt);
+            }
+        });
+
+    }
+
+    function handleUpdate(evt) {
+        console.log(evt.target.value);
+    }
+
+    inputs.forEach(input => onRangeChange(input, handleUpdate));
 </script>
 
 </body>
