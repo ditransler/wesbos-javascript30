@@ -126,25 +126,13 @@
             });
 
             const seconds = now.getSeconds();
-            secondsHand.dataset.degrees = seconds * 6;
+            secondsHand.dataset.degrees = (seconds === 0) ? 360 : seconds * 6;
 
             const minutes = now.getMinutes();
-            minutesHand.dataset.degrees = minutes * 6;
+            minutesHand.dataset.degrees = (minutes === 0) ? 360 : minutes * 6;
 
             const hours = now.getHours();
-            hoursHand.dataset.degrees = hours * 15;
-
-            if (seconds === 0) {
-                secondsHand.dataset.degrees = 360;
-            }
-
-            if (minutes === 0) {
-                minutesHand.dataset.degrees = 360;
-            }
-
-            if (hours === 0) {
-                hoursHand.dataset.degrees = 360;
-            }
+            hoursHand.dataset.degrees = (hours === 0) ? 360: (hours % 12) * 30;
 
             secondsHand.style.transform = `rotate(${secondsHand.dataset.degrees}deg)`;
             minutesHand.style.transform = `rotate(${minutesHand.dataset.degrees}deg)`;
