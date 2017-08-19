@@ -115,7 +115,7 @@
             rangeValue.current = target.value;
 
             if (rangeValue.current !== rangeValue.mostRecent) {
-                listener(evt);
+                listener.call(target, evt);
             }
 
             rangeValue.mostRecent = rangeValue.current;
@@ -129,13 +129,15 @@
             }
 
             if (target._inputEvtHasNeverFired) {
-                listener(evt);
+                listener.call(target, evt);
             }
         });
     }
 
-    function handleUpdate(evt) {
-        console.log(evt.target.value);
+    function handleUpdate() {
+        const sizing = this.dataset.sizing || '';
+
+        document.documentElement.style.setProperty(`--${this.name}`, this.value + sizing);
     }
 
     delegateInputChange(controls, 'input', handleUpdate);
