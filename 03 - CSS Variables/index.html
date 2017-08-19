@@ -62,21 +62,57 @@
 
 <script>
     const controls = document.querySelector('.controls');
-    const inputs = controls.querySelectorAll('input');
 
     // A cross-browser desktop-and-mobile way
     // to consitently respond to range/slider interactions
     // Credits to Andrew Willems (https://stackoverflow.com/a/37623959)
-    function onRangeChange(rangeInputElem, listener) {
+    function onInputChange(inputElem, listener) {
 
         let inputEvtHasNeverFired = true;
 
-        let rangeValue = { current: null, mostRecent: null };
+        let inputValue = { current: null, mostRecent: null };
 
-        rangeInputElem.addEventListener('input', function(evt) {
+        inputElem.addEventListener('input', function(evt) {
             inputEvtHasNeverFired = false;
 
-            rangeValue.current = evt.target.value;
+            inputValue.current = evt.target.value;
+
+            if (inputValue.current !== inputValue.mostRecent) {
+                listener(evt);
+            }
+
+            inputValue.mostRecent = inputValue.current;
+        });
+
+        inputElem.addEventListener('change', function(evt) {
+            if (inputEvtHasNeverFired) {
+                listener(evt);
+            }
+        });
+
+    }
+
+    function delegateInputChange(inputParent, inputSelector, listener) {
+        const inputs = inputParent.querySelectorAll(inputSelector);
+
+        inputs.forEach(input => {
+            input._isWatched = true;
+            input._inputEvtHasNeverFired = true;
+            input._rangeValue = { current: null, mostRecent: null };
+        });
+
+        inputParent.addEventListener('input', function (evt) {
+            const target = evt.target;
+
+            if (target._isWatched !== true) {
+                return;
+            }
+
+            const rangeValue = target._rangeValue;
+
+            target._inputEvtHasNeverFired = false;
+
+            rangeValue.current = target.value;
 
             if (rangeValue.current !== rangeValue.mostRecent) {
                 listener(evt);
@@ -85,19 +121,24 @@
             rangeValue.mostRecent = rangeValue.current;
         });
 
-        rangeInputElem.addEventListener('change', function(evt) {
-            if (inputEvtHasNeverFired) {
+        inputParent.addEventListener('change', function (evt) {
+            const target = evt.target;
+
+            if (target._isWatched !== true) {
+                return;
+            }
+
+            if (target._inputEvtHasNeverFired) {
                 listener(evt);
             }
         });
-
     }
 
     function handleUpdate(evt) {
         console.log(evt.target.value);
     }
 
-    inputs.forEach(input => onRangeChange(input, handleUpdate));
+    delegateInputChange(controls, 'input', handleUpdate);
 </script>
 
 </body>
