@@ -49,6 +49,10 @@
                         background 0.2s;
         }
 
+        .panels__item:hover {
+            cursor: pointer;
+        }
+
         .panels__item--open {
             flex: 5;
             font-size: 40px;
@@ -100,8 +104,8 @@
             font-size: 4em;
         }
 
-        .panels__item--open .panels__item-text:first-child,
-        .panels__item--open .panels__item-text:last-child {
+        .panels__item--active .panels__item-text:first-child,
+        .panels__item--active .panels__item-text:last-child {
             transform: translateY(0%);
         }
     </style>
@@ -136,7 +140,19 @@
     </div>
 
     <script>
+        const panels = document.querySelector('.panels');
 
+        function toggleOpen(evt) {
+            const targetParent = evt.target.closest('.panels__item');
+
+            if (!targetParent) {
+                return;
+            }
+
+            targetParent.classList.toggle('panels__item--open');
+        }
+
+        panels.addEventListener('click', toggleOpen);
     </script>
 </body>
 </html>
