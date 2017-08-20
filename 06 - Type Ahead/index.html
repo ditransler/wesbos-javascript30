@@ -23,6 +23,10 @@
         .then(blob => blob.json())
         .then(data => cities.push(...data));
 
+    function getNumberWithCommas(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
     function findMatches(wordToMatch, cities) {
         return cities.filter(place => {
             const regex = new RegExp(wordToMatch, 'gi');
@@ -46,7 +50,7 @@
             return `
                 <li class="suggestions__item">
                     <span class="suggestions__name">${cityName}, ${stateName}</span>
-                    <span class="suggestions__population">${place.population}</span>
+                    <span class="suggestions__population">${getNumberWithCommas(place.population)}</span>
                 </li>
             `;
         }).join('');
