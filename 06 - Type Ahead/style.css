@@ -72,7 +72,7 @@ a {
     transform: perspective(100px) rotateX(-3deg) translateY(3px);
 }
 
-.population {
+.suggestions__population {
     font-size: 15px;
 }
 
