@@ -142,8 +142,23 @@
     <script>
         const panels = document.querySelector('.panels');
 
+        function removeSiblingsClass(elem, className) {
+            let sibling = elem.parentNode.firstElementChild;
+
+            while (sibling) {
+                if (sibling === elem) {
+                    sibling = sibling.nextElementSibling;
+                    continue;
+                }
+
+                sibling.classList.remove(className);
+                sibling = sibling.nextElementSibling;
+            }
+        }
+
         function toggleActive(evt) {
             const target = evt.target;
+            const className = 'panels__item--active';
 
             if (!evt.propertyName.includes('flex')) {
                 return;
@@ -153,20 +168,27 @@
                 return;
             }
 
-            target.classList.toggle('panels__item--active');
+            if (target.classList.contains('panels__item--open')) {
+                target.classList.add(className);
+            } else {
+                target.classList.remove(className);
+            }
+
         }
 
-        function toggleOpen(evt) {
+        function onClickPanelsItem(evt) {
             const targetParent = evt.target.closest('.panels__item');
+            const className = 'panels__item--open';
 
             if (!targetParent) {
                 return;
             }
 
-            targetParent.classList.toggle('panels__item--open');
+            removeSiblingsClass(targetParent, className);
+            targetParent.classList.toggle(className);
         }
 
-        panels.addEventListener('click', toggleOpen);
+        panels.addEventListener('click', onClickPanelsItem);
         panels.addEventListener('transitionend', toggleActive);
     </script>
 </body>
