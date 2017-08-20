@@ -142,6 +142,20 @@
     <script>
         const panels = document.querySelector('.panels');
 
+        function toggleActive(evt) {
+            const target = evt.target;
+
+            if (!evt.propertyName.includes('flex')) {
+                return;
+            }
+
+            if (!target.matches('.panels__item')) {
+                return;
+            }
+
+            target.classList.toggle('panels__item--active');
+        }
+
         function toggleOpen(evt) {
             const targetParent = evt.target.closest('.panels__item');
 
@@ -153,6 +167,7 @@
         }
 
         panels.addEventListener('click', toggleOpen);
+        panels.addEventListener('transitionend', toggleActive);
     </script>
 </body>
 </html>
