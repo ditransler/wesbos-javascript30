@@ -6,3 +6,4 @@ package.json
 package-lock.json
 README.md
 .editorconfig
+**/*.png

@@ -123,7 +123,44 @@
     </div>
 
     <script>
+        const inbox = document.querySelector('.inbox');
 
+        let lastCheckedId;
+
+        const SHIFT_KEYCODE = 16;
+        let isShiftPressed = false;
+
+        inbox.addEventListener('change', function (evt) {
+            if (!evt.target.classList.contains('inbox__checkbox')) {
+                return;
+            }
+
+            const currentId = +evt.target.id;
+
+            if (evt.target.checked && isShiftPressed) {
+                const checkboxes = inbox.querySelectorAll('.inbox__checkbox');
+
+                let inBetween = false;
+
+                checkboxes
+                    .forEach(item => {
+                        const itemId = +item.id;
+
+                        if (itemId === currentId || itemId === lastCheckedId) {
+                            inBetween = !inBetween;
+                        }
+
+                        if (inBetween) {
+                            item.setAttribute('checked', 'checked');
+                        }
+                    });
+            }
+
+            lastCheckedId = currentId;
+        });
+
+        document.addEventListener('keydown', (evt) => isShiftPressed = evt.keyCode === SHIFT_KEYCODE);
+        document.addEventListener('keyup', (evt) => isShiftPressed = false);
     </script>
 </body>
 </html>
