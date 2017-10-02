@@ -101,8 +101,21 @@ body {
 .player__progress-fill {
   background-color: #ffc600;
   flex: 0;
-  flex-basis: 50%;
+  flex-basis: 0;
   width: 50%;
+}
+
+.player__fullscreen {
+    flex: none;
+    width: 30px;
+}
+
+.player__fullscreen > span {
+    display: inline-block;
+    font-size: 16px;
+    margin-top: -3px;
+    transform: rotate(45deg);
+    vertical-align: middle;
 }
 
 /* unholy css to style input type="range" */

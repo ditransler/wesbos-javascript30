@@ -8,17 +8,18 @@
 <body>
 
    <div class="player">
-     <video class="player__video viewer" src="https://player.vimeo.com/external/194837908.sd.mp4?s=c350076905b78c67f74d7ee39fdb4fef01d12420&profile_id=164" poster="video-poster.png"></video>
+     <video class="player__video" src="https://player.vimeo.com/external/194837908.sd.mp4?s=c350076905b78c67f74d7ee39fdb4fef01d12420&profile_id=164" poster="video-poster.png"></video>
 
      <div class="player__controls">
        <div class="player__progress">
         <div class="player__progress-fill"></div>
        </div>
-       <button class="player__button toggle" title="Toggle Play">►</button>
+       <button class="player__toggle player__button" title="Toggle Play">►</button>
        <input class="player__slider" name="volume" type="range"  min="0" max="1" step="0.05" value="1">
        <input class="player__slider" name="playbackRate" type="range" min="0.5" max="2" step="0.1" value="1">
-       <button class="player__button" data-skip="-10" type="button">&laquo; 10s</button>
-       <button class="player__button" data-skip="25" type="button">25s &raquo;</button>
+       <button class="player__skip player__button" data-skip="-10" type="button">&laquo; 10s</button>
+       <button class="player__skip player__button" data-skip="25" type="button">25s &raquo;</button>
+       <button class="player__fullscreen player__button" type="button"><span>↔</span></button>
      </div>
    </div>
 
