@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+</head>
+<body>
+<script>
+    const sequence = [];
+    const secretCode = 'wesbos';
+
+    window.addEventListener('keyup', function (evt) {
+        sequence.push(evt.key);
+        sequence.splice(-sequence.length - 1, sequence.length - secretCode.length);
+
+        if (sequence.join('') !== secretCode) {
+            return;
+        }
+
+        console.log('%c DING DING!!! 👏', 'color: #bada55;');
+    });
+</script>
+</body>
+</html>
