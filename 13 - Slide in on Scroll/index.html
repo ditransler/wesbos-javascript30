@@ -200,6 +200,8 @@
 </div>
 
 <script>
+    const DEBOUNCE_WAIT = 500;
+
     function debounce(func, wait = 20, immediate = true) {
         let timeout;
 
@@ -227,6 +229,26 @@
         };
     }
 
+    const sliderImages = document.querySelectorAll('.slide-in');
+
+    function checkSlide() {
+        sliderImages.forEach(image => {
+            // half way through the image
+            const slideInAt = (window.scrollY + window.innerHeight) - (image.height / 2);
+
+            const imageBottom = image.offsetTop + image.height;
+            const isHalfShown = slideInAt > image.offsetTop;
+            const isNotScrolledPast = window.scrollY < imageBottom;
+
+            if (isHalfShown && isNotScrolledPast) {
+                image.classList.add('is-active');
+            } else {
+                image.classList.remove('is-active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', debounce(checkSlide, DEBOUNCE_WAIT));
 </script>
 </body>
 </html>
