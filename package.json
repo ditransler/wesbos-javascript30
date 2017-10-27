@@ -5,11 +5,13 @@
   "private": true,
   "scripts": {
     "lint:eslint": "./node_modules/.bin/eslint ./**/*",
-    "precommit": "npm run lint:eslint"
+    "precommit": "npm run lint:eslint",
+    "server": "browser-sync start --server '19 - Webcam Fun' --files '19 - Webcam Fun'"
   },
   "author": "Dmitriy Beglov",
   "license": "ISC",
   "devDependencies": {
+    "browser-sync": "^2.18.13",
     "eslint": "~4.3.0",
     "eslint-plugin-html": "~3.1.1",
     "husky": "~0.14.3"
