@@ -6,7 +6,7 @@
   "scripts": {
     "lint:eslint": "./node_modules/.bin/eslint ./**/*",
     "precommit": "npm run lint:eslint",
-    "server": "browser-sync start --server '19 - Webcam Fun' --files '19 - Webcam Fun'"
+    "server": "browser-sync start --server '20 - Speech Detection' --files '20 - Speech Detection'"
   },
   "author": "Dmitriy Beglov",
   "license": "ISC",
