@@ -6,7 +6,7 @@
   "scripts": {
     "lint:eslint": "./node_modules/.bin/eslint ./**/*",
     "precommit": "npm run lint:eslint",
-    "server": "browser-sync start --server '20 - Speech Detection' --files '20 - Speech Detection'"
+    "server": "browser-sync start --server '21 - Geolocation' --files '21 - Geolocation' --https"
   },
   "author": "Dmitriy Beglov",
   "license": "ISC",
