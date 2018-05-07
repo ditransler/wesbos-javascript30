@@ -11,7 +11,7 @@
   "author": "Dmitriy Beglov",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.18.13",
+    "browser-sync": "^2.24.4",
     "eslint": "~4.3.0",
     "eslint-plugin-html": "~3.1.1",
     "husky": "~0.14.3"
